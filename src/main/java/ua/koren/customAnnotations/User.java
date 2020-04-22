@@ -1,7 +1,6 @@
 package ua.koren.customAnnotations;
 
-@SetObjectFields(name = "Just User",
-        instantiated = false)
+@SetObjectFields(name = "Just User", instantiated = false)
 public class User {
 
     @UnInitialized
@@ -9,6 +8,14 @@ public class User {
 
     @UnInitialized
     private int num;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNum() {
+        return num;
+    }
 
     @Override
     public String toString() {

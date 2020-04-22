@@ -6,8 +6,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
-public class Demo {
-
+public class AnnotationHandler {
     public static Properties download() {
         Properties properties = new Properties();
         try (InputStream input = new FileInputStream("config.properties")) {
@@ -21,8 +20,7 @@ public class Demo {
     public static void initializeObject(Object object, Properties properties)
             throws NoSuchFieldException, IllegalAccessException {
         if (object == null) {
-            System.out.println("Nothing to initialize...");
-            return;
+            throw new RuntimeException("Cannot initialize null object");
         }
         Class<?> cl = object.getClass();
         if (cl.isAnnotationPresent(SetObjectFields.class) && !cl.getAnnotation(SetObjectFields.class).instantiated()) {
@@ -44,11 +42,4 @@ public class Demo {
         return field.isAnnotationPresent(UnInitialized.class);
     }
 
-    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        Properties prop = download();
-        System.out.println(prop.getProperty("user.name"));
-        User user = new User();
-        initializeObject(user, prop);
-        System.out.println(user.toString());
-    }
 }
